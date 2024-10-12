@@ -34,6 +34,16 @@ All [Assets](https://brackeysgames.itch.io/brackeys-platformer-bundle) can be fo
 14. Make Background Layer in TileMap and add background
 15. Make a quit state for the game
 
+Extra:
+
+1. Make terrains from TileMaps. (Edit [platforms.png](./assets/sprites/platforms.png) in Aseprite to have a repeatable style for a Terrain)
+2. Make Parallax2D to make TileMapLayer separated and movable
+
+Note:
+
+For Parallax2D to work, you need an image at the same size as viewport at least and then repeat it at least 2 time to cover all our viewport as always.
+![parallax example](./images/parallax.png)
+
 ### Exercises
 
 Make an environment with [this asset](https://pixelprogrammer.itch.io/pixel-platformer-art-pack) and use [this pack](https://seliel-the-shaper.itch.io/character-base) to create your character in the game.

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- 🎉 feat: first session with extras added
 - 🎉 feat: added 2d platformer first session
 <!-- ## [0.0.2] - 2022-12-07
 
