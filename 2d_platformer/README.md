@@ -47,3 +47,21 @@ For Parallax2D to work, you need an image at the same size as viewport at least 
 ### Exercises
 
 Make an environment with [this asset](https://pixelprogrammer.itch.io/pixel-platformer-art-pack) and use [this pack](https://seliel-the-shaper.itch.io/character-base) to create your character in the game.
+
+## Second Session
+
+### Concepts
+
+1. Talk about _process and _physics_process
+2. Talk about interpolation for physics
+
+### Implementations
+
+1. Fix Jittering of Moving Platforms (Physics Interpolation)
+2. Make more and more complete terrains
+3. Make better character movement (Player v2.0)
+4. Make hints here and there about mechanics of the game
+5. Add Score management with defining a 'Game Manager' node + A hint that says how much coins we collected so far
+6. Add music for the game (Make it AutoLoad so it plays always and doesn't reset when you die)
+7. Add Sound effect for the coin
+8. Export the game
