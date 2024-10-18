@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- 🎉 feat: added second project for level design and camera movement
 - 🎉 feat: almost finished second session
 - 🎉 feat: first session with extras added
 - 🎉 feat: added 2d platformer first session

@@ -1,0 +1,51 @@
+[gd_scene load_steps=10 format=3 uid="uid://l0i1ak2u10f3"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_kwnwe"]
+[ext_resource type="Resource" path="res://terrain_data/data.hterrain" id="2_hcng1"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_5w1dv"]
+[ext_resource type="Texture2D" uid="uid://dyii57a04e6ij" path="res://assets/textures/sand/Ground054_1K-JPG_Color.jpg" id="4_xy76d"]
+[ext_resource type="Texture2D" uid="uid://iq56s1hjt5g8" path="res://assets/textures/sand/Ground054_1K-JPG_NormalGL.jpg" id="5_5p3wg"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="6_c4xci"]
+[ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="7_2630o"]
+[ext_resource type="PackedScene" uid="uid://csnmay7t21joe" path="res://scenes/character.tscn" id="8_h0f1p"]
+
+[sub_resource type="Resource" id="Resource_tr42u"]
+script = ExtResource("3_5w1dv")
+mode = 0
+textures = [[ExtResource("4_xy76d")], [ExtResource("5_5p3wg")]]
+
+[node name="World" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_kwnwe")
+centered = true
+_terrain_data = ExtResource("2_hcng1")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 2
+collision_mask = 3
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_tr42u")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+
+[node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
+script = ExtResource("6_c4xci")
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = null
+shader_params/u_roughness = null
+metadata/_editor_icon = ExtResource("7_2630o")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.982935, -0.142957, -0.115764, 0, -0.62932, 0.777146, -0.183951, 0.763884, 0.618581, 0, 0, 0)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("8_h0f1p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 41.8357, 0)

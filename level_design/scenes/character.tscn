@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://csnmay7t21joe"]
+
+[ext_resource type="Script" path="res://scenes/character.gd" id="1_8kexg"]
+[ext_resource type="Script" path="res://scenes/camera.gd" id="2_l0dwl"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uwfth"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cqgg2"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_5pbah"]
+outer_radius = 0.564
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+collision_mask = 3
+script = ExtResource("1_8kexg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_uwfth")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_cqgg2")
+
+[node name="CameraAnchor" type="Node3D" parent="."]
+unique_name_in_owner = true
+
+[node name="CameraPositionLead" type="Node3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 5, 9)
+visible = false
+
+[node name="CameraPositionMesh" type="MeshInstance3D" parent="CameraAnchor/CameraPositionLead"]
+mesh = SubResource("TorusMesh_5pbah")
+
+[node name="Camera" type="Camera3D" parent="CameraAnchor"]
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 5, 9)
+top_level = true
+current = true
+script = ExtResource("2_l0dwl")
+
+[node name="ForwardLead" type="Node3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+visible = false
+
+[node name="ForwardMesh" type="MeshInstance3D" parent="CameraAnchor/ForwardLead"]
+mesh = SubResource("TorusMesh_5pbah")
+skeleton = NodePath("../../CameraPositionLead")
+
+[node name="RightLead" type="Node3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 0)
+visible = false
+
+[node name="RightMesh" type="MeshInstance3D" parent="CameraAnchor/RightLead"]
+mesh = SubResource("TorusMesh_5pbah")
+skeleton = NodePath("../../CameraPositionLead")
+
+[node name="RayCast" type="RayCast3D" parent="CameraAnchor"]
+unique_name_in_owner = true
+target_position = Vector3(0, 5, 9)
+collision_mask = 2

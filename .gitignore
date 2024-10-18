@@ -14,6 +14,7 @@ export_presets.cfg
 
 # Godot 4+ specific ignores
 .godot/
+/android/
 
 # Imported translations (automatically generated from CSV files)
 *.translation
