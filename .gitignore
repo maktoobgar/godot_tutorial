@@ -21,3 +21,7 @@ export_presets.cfg
 
 # vscode
 .vscode
+
+# ignore chest choose of godot3
+
+chest_choose_3

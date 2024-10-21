@@ -3,16 +3,40 @@
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_kwnwe"]
 [ext_resource type="Resource" path="res://terrain_data/data.hterrain" id="2_hcng1"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_5w1dv"]
-[ext_resource type="Texture2D" uid="uid://dyii57a04e6ij" path="res://assets/textures/sand/Ground054_1K-JPG_Color.jpg" id="4_xy76d"]
-[ext_resource type="Texture2D" uid="uid://iq56s1hjt5g8" path="res://assets/textures/sand/Ground054_1K-JPG_NormalGL.jpg" id="5_5p3wg"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="6_c4xci"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="7_2630o"]
 [ext_resource type="PackedScene" uid="uid://csnmay7t21joe" path="res://scenes/character.tscn" id="8_h0f1p"]
 
+[sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_pa6ll"]
+constant = Color(1, 0.266667, 0.223529, 1)
+
+[sub_resource type="VisualShader" id="VisualShader_3pik7"]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+
+void fragment() {
+// ColorConstant:2
+	vec4 n_out2p0 = vec4(1.000000, 0.266667, 0.223529, 1.000000);
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+
+
+}
+"
+graph_offset = Vector2(-58, 78)
+nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_pa6ll")
+nodes/fragment/2/position = Vector2(189, 209)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0)
+
 [sub_resource type="Resource" id="Resource_tr42u"]
 script = ExtResource("3_5w1dv")
 mode = 0
-textures = [[ExtResource("4_xy76d")], [ExtResource("5_5p3wg")]]
+textures = [[], []]
 
 [node name="World" type="Node3D"]
 
@@ -24,16 +48,19 @@ chunk_size = 32
 collision_enabled = true
 collision_layer = 2
 collision_mask = 3
-shader_type = "Classic4Lite"
-custom_shader = null
+shader_type = "Classic4"
+custom_shader = SubResource("VisualShader_3pik7")
 custom_globalmap_shader = null
 texture_set = SubResource("Resource_tr42u")
 render_layers = 1
 cast_shadow = 1
-shader_params/u_ground_uv_scale = 20
+shader_params/u_ground_uv_scale_per_texture = null
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
+shader_params/u_globalmap_blend_start = null
+shader_params/u_globalmap_blend_distance = null
+shader_params/u_colormap_opacity_per_texture = null
 
 [node name="HTerrainDetailLayer" type="Node3D" parent="HTerrain"]
 script = ExtResource("6_c4xci")
