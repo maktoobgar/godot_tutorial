@@ -930,4 +930,10 @@ unique_name_in_owner = true
 tile_set = SubResource("TileSet_msxq3")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.273873, 0.273873, 0.273873, 1)
+color = Color(0.230315, 0.230315, 0.230315, 1)
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+rotation = -0.610865
+energy = 0.2
+blend_mode = 2
+shadow_enabled = true

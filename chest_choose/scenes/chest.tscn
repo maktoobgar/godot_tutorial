@@ -1,7 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cig72070cg62a"]
+[gd_scene load_steps=17 format=3 uid="uid://cig72070cg62a"]
 
 [ext_resource type="Script" path="res://scenes/chest.gd" id="1_4vowp"]
 [ext_resource type="Texture2D" uid="uid://bd2q5wpp518l5" path="res://assets/objects/chests/Chest.png" id="2_kibex"]
+[ext_resource type="Texture2D" uid="uid://dtd0iwy7kidej" path="res://assets/objects/pointers/7.png" id="4_5rdfr"]
+[ext_resource type="FontFile" uid="uid://gmlu7cnhpb5e" path="res://assets/fonts/Pixellari.ttf" id="7_5oqwl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t7nmu"]
 atlas = ExtResource("2_kibex")
@@ -52,7 +54,50 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aq0yy"]
-size = Vector2(40, 24)
+size = Vector2(96, 24)
+
+[sub_resource type="Animation" id="Animation_y20yp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sjwwm"]
+resource_name = "show"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("UI:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_m7l0g"]
+_data = {
+"RESET": SubResource("Animation_y20yp"),
+"show": SubResource("Animation_sjwwm")
+}
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ku1xh"]
+polygon = PackedVector2Array(15, 0, 15, -10, 12, -18, 3, -21, -18, -21, -22, -18, -22, -11, -24, -10, -24, 0)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_u4ngl"]
+polygon = PackedVector2Array(4, 21, 4, 10, 0, 10, 0, 2, 4, 2, 4, 0, 9, 0, 9, 2, 12, 2, 12, 3, 13, 3, 13, 9, 12, 9, 12, 10, 9, 10, 9, 21)
 
 [node name="Chest" type="Node2D"]
 script = ExtResource("1_4vowp")
@@ -65,12 +110,50 @@ autoplay = "default"
 centered = false
 offset = Vector2(-16, -32)
 
+[node name="UI" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="CenterContainer" type="CenterContainer" parent="UI"]
+layout_mode = 0
+offset_top = -56.0
+offset_bottom = -56.0
+use_top_left = true
+
+[node name="Label" type="Label" parent="UI/CenterContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_5oqwl")
+text = "Example"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-4, -12)
+position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_aq0yy")
 
+[node name="UIAnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_m7l0g")
+}
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_ku1xh")
+
+[node name="SelectSign" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(22, -21)
+texture = ExtResource("4_5rdfr")
+centered = false
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="SelectSign"]
+occluder = SubResource("OccluderPolygon2D_u4ngl")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,10 +1,17 @@
 extends CharacterBody2D
 
 const SPEED = 60.0
-const RUN_SPEED = 100.0
+const RUN_SPEED = 120.0
 const JUMP_VELOCITY = -260
 
 @onready var character_sprites: AnimatedSprite2D = %CharacterSprites
+@onready var help: Label = %Help
+
+var spawn_position = Vector2.ZERO
+
+func _ready() -> void:
+	Global.help_ui = help
+	spawn_position = self.global_position
 
 func _move(delta: float) -> void:
 	# Add the gravity.

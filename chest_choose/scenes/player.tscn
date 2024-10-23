@@ -1,15 +1,39 @@
-[gd_scene load_steps=29 format=3 uid="uid://gag13pcbmb0u"]
+[gd_scene load_steps=33 format=3 uid="uid://gag13pcbmb0u"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_o3wen"]
+[ext_resource type="Script" path="res://scenes/light_position.gd" id="2_atkre"]
 [ext_resource type="Texture2D" uid="uid://b4im3n4soy1l4" path="res://assets/objects/light/light.png" id="2_hobpx"]
 [ext_resource type="Texture2D" uid="uid://djdro27wker7q" path="res://assets/characters/dude monster/Dude_Monster_Jump_8.png" id="3_helw7"]
 [ext_resource type="Texture2D" uid="uid://2v7wfutk1uub" path="res://assets/characters/dude monster/Dude_Monster_Idle_4.png" id="3_x6g1q"]
 [ext_resource type="Texture2D" uid="uid://rsf7bw7u3gjp" path="res://assets/characters/dude monster/Dude_Monster_Run_6.png" id="4_3bcb1"]
 [ext_resource type="Texture2D" uid="uid://co0d5c8p8yi2d" path="res://assets/characters/dude monster/Dude_Monster_Walk_6.png" id="4_7t4f1"]
+[ext_resource type="FontFile" uid="uid://gmlu7cnhpb5e" path="res://assets/fonts/Pixellari.ttf" id="7_eta4p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ukplx"]
 radius = 8.0
 height = 32.0
+
+[sub_resource type="Animation" id="Animation_rwor5"]
+resource_name = "wobble"
+length = 3.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%LightAndTextureContainer/Lights:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(8, 4), Vector2(-8, 0), Vector2(8, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1wgy8"]
+_data = {
+"wobble": SubResource("Animation_rwor5")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0h5ub"]
 atlas = ExtResource("3_helw7")
@@ -190,18 +214,69 @@ shape = SubResource("CapsuleShape2D_ukplx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -64)
+limit_bottom = 250
+limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="LightPosition" type="Node2D" parent="."]
+position = Vector2(0, -44)
+script = ExtResource("2_atkre")
+
+[node name="LightAndTextureContainer" type="Node2D" parent="LightPosition"]
+unique_name_in_owner = true
+top_level = true
+position = Vector2(0, -60)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LightPosition/LightAndTextureContainer"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_1wgy8")
+}
+autoplay = "wobble"
+
+[node name="Lights" type="Node2D" parent="LightPosition/LightAndTextureContainer"]
+position = Vector2(8, 4)
+
+[node name="PointLight2D" type="PointLight2D" parent="LightPosition/LightAndTextureContainer/Lights"]
 shadow_enabled = true
 shadow_item_cull_mask = 2
 texture = ExtResource("2_hobpx")
 
+[node name="LightTexture" type="TextureRect" parent="LightPosition/LightAndTextureContainer/Lights"]
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 24.0
+offset_bottom = 24.0
+texture = ExtResource("2_hobpx")
+expand_mode = 1
+
 [node name="CharacterSprites" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -8)
-scale = Vector2(1.5, 1.5)
+position = Vector2(0, -4)
+scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_esn7x")
 animation = &"jump"
 autoplay = "idle"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Help" type="Label" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 181.0
+offset_bottom = 55.0
+theme_override_fonts/font = ExtResource("7_eta4p")
+text = "Press E to Open Boxes
+Press F to Lock Boxes"

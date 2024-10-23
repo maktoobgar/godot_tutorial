@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- 🎉 feat: added second session
 - 🎉 feat: clean up after adding some new things to the first session
 - 🎉 feat: chest choose first session
 - 🎉 feat: added second project for level design and camera movement
