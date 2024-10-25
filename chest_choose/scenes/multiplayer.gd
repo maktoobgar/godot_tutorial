@@ -23,9 +23,9 @@ func _ready() -> void:
 
 # Gets called on the server and clients
 func _peer_connected(id: int) -> void:
+	print("Player Connected {id}".format({"id": id}))
 	if multiplayer.is_server():
 		inform_everyone_about_me_joining.rpc(player_name, multiplayer.get_unique_id())
-	print("Player Connected {id}".format({"id": id}))
 
 # Gets called on the server and clients
 func _peer_disconnected(id: int) -> void:
@@ -33,8 +33,8 @@ func _peer_disconnected(id: int) -> void:
 
 # Gets called only from clients
 func _connected_to_server() -> void:
-	inform_everyone_about_me_joining.rpc(player_name, multiplayer.get_unique_id())
 	print("Connected To Server")
+	inform_server_about_me_joining.rpc_id(1, player_name, multiplayer.get_unique_id())
 
 # Gets called only from clients
 func _connection_failed() -> void:
@@ -63,6 +63,14 @@ func join(address: String, port: int) -> void:
 	# Optional
 	_peer.host.compress(ENetConnection.COMPRESS_NONE)
 	multiplayer.multiplayer_peer = _peer
+
+@rpc("any_peer", "call_local", "reliable")
+func inform_server_about_me_joining(name: String, id: int) -> void:
+	if !players.has(id):
+		players[id] = Player.new(id, name)
+	for _id in players:
+		inform_everyone_about_me_joining.rpc(players[_id].name, _id)
+	print("from {id}, players: {players}".format({"id": multiplayer.get_unique_id(), "players": players}))
 
 @rpc("any_peer", "call_local", "reliable")
 func inform_everyone_about_me_joining(name: String, id: int) -> void:

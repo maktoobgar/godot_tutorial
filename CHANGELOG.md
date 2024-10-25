@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- 🐛 fix: more than one person was not possible which now is
 - 🎉 feat: added the last session of the tutorial
 - 🎉 feat: added second session
 - 🎉 feat: clean up after adding some new things to the first session

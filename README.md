@@ -26,6 +26,6 @@ This is a repository containing 2 different games to teach game development with
 
 ![Brackeys game](./2d_platformer/demo.png)
 
-### [Second Game Demo](./chest_choose/demo.png) (With multiplayer)
+### [Second Game Demo](./chest_choose) (With multiplayer, inspired by [FinePointCGI](https://www.youtube.com/watch?v=e0JLO_5UgQo&ab_channel=FinePointCGI))
 
 ![Brackeys game](./chest_choose/demo.png)
