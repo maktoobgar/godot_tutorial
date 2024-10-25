@@ -6,10 +6,23 @@ const JUMP_VELOCITY = -260
 
 @onready var character_sprites: AnimatedSprite2D = %CharacterSprites
 @onready var help: Label = %Help
+@onready var multiplayer_synchronizer: MultiplayerSynchronizer = %MultiplayerSynchronizer
+@onready var player_name_label: Label = %Name
+@onready var camera_2d: Camera2D = %Camera2D
 
 var spawn_position = Vector2.ZERO
+var unique_id = 1
+var player_name = ""
+var _position = Vector2.ZERO
 
 func _ready() -> void:
+	self.set_multiplayer_authority(unique_id, true)
+	multiplayer_synchronizer.set_multiplayer_authority(unique_id)
+	if unique_id != multiplayer.get_unique_id():
+		camera_2d.enabled = false
+	if unique_id != 1:
+		modulate = Color("65ff588f")
+	player_name_label.text = player_name
 	Global.help_ui = help
 	spawn_position = self.global_position
 
@@ -56,7 +69,13 @@ func _move(delta: float) -> void:
 	else:
 		velocity.x = 0
 
+	_position = global_position
 	move_and_slide()
 
 func _physics_process(delta: float) -> void:
-	_move(delta)
+	if unique_id == multiplayer.get_unique_id():
+		_move(delta)
+	else:
+		global_position = global_position.lerp(_position, 0.3)
+		if !character_sprites.is_playing():
+			character_sprites.play()

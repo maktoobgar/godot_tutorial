@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://gag13pcbmb0u"]
+[gd_scene load_steps=34 format=3 uid="uid://gag13pcbmb0u"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_o3wen"]
 [ext_resource type="Script" path="res://scenes/light_position.gd" id="2_atkre"]
@@ -203,24 +203,36 @@ animations = [{
 "speed": 7.0
 }]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hrfsk"]
+properties/0/path = NodePath("CharacterSprites:flip_h")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("CharacterSprites:animation")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:_position")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(0, -16)
 collision_layer = 2
-collision_mask = 7
+collision_mask = 5
 script = ExtResource("1_o3wen")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
 shape = SubResource("CapsuleShape2D_ukplx")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -64)
+unique_name_in_owner = true
+position = Vector2(0, -80)
 limit_bottom = 250
 limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 
 [node name="LightPosition" type="Node2D" parent="."]
-position = Vector2(0, -44)
+position = Vector2(0, -60)
 script = ExtResource("2_atkre")
 
 [node name="LightAndTextureContainer" type="Node2D" parent="LightPosition"]
@@ -253,7 +265,7 @@ expand_mode = 1
 
 [node name="CharacterSprites" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -4)
+position = Vector2(0, -20)
 scale = Vector2(1.25, 1.25)
 sprite_frames = SubResource("SpriteFrames_esn7x")
 animation = &"jump"
@@ -280,3 +292,24 @@ offset_bottom = 55.0
 theme_override_fonts/font = ExtResource("7_eta4p")
 text = "Press E to Open Boxes
 Press F to Lock Boxes"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+unique_name_in_owner = true
+replication_config = SubResource("SceneReplicationConfig_hrfsk")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 12.0
+offset_right = 1.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Name" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("7_eta4p")

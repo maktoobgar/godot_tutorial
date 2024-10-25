@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://d0lqwgqc48jab"]
+
+[ext_resource type="Texture2D" uid="uid://b4mwm2tib3lxb" path="res://assets/objects/ui/button_2x.png" id="1_8lqjj"]
+[ext_resource type="Texture2D" uid="uid://drtlqd8irx60g" path="res://assets/objects/ui/button_2x_up.png" id="2_b4epi"]
+[ext_resource type="Texture2D" uid="uid://xklv4oxu7jd2" path="res://assets/objects/ui/button_2x_hover.png" id="3_7p1pc"]
+[ext_resource type="Texture2D" uid="uid://t1ygb7nhu0ka" path="res://assets/objects/ui/button_2x_disabled.png" id="4_s0c1v"]
+[ext_resource type="Script" path="res://scenes/button.gd" id="5_3nla8"]
+[ext_resource type="FontFile" uid="uid://gmlu7cnhpb5e" path="res://assets/fonts/Pixellari.ttf" id="6_b0is5"]
+
+[node name="Button" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("1_8lqjj")
+texture_pressed = ExtResource("2_b4epi")
+texture_hover = ExtResource("3_7p1pc")
+texture_disabled = ExtResource("4_s0c1v")
+script = ExtResource("5_3nla8")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_b0is5")
+text = "sdsadasdsad"

@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Chest Choose"
-run/main_scene="res://test.tscn"
+run/main_scene="res://scenes/menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Global="*res://scenes/global.gd"
+Multiplayer="*res://scenes/multiplayer.gd"
 
 [display]
 

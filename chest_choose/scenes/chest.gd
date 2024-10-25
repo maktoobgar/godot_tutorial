@@ -8,7 +8,15 @@ class_name Chest
 
 var is_open: bool = false
 
+func _ready() -> void:
+	animated_sprite.animation_changed.connect(_run_animation_if_not_server)
+
+func _run_animation_if_not_server() -> void:
+	if !multiplayer.is_server():
+		animated_sprite.play()
+
 func open() -> void:
+	unlock()
 	Global.active_chest = null
 	Global.help_ui.visible = false
 
@@ -24,15 +32,16 @@ func lock() -> void:
 
 func unlock() -> void:
 	select_sign.visible = false
+	Global.locked_chest = null
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if not is_open:
+func _on_body_entered(body: Node2D) -> void:
+	ui_animation_player.play("show", 1, 1, false)
+	if not is_open and multiplayer.is_server() and body.unique_id == 1:
 		Global.active_chest = self
-		ui_animation_player.play("show", 1, 1, false)
 		Global.help_ui.visible = true
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if not is_open:
+func _on_body_exited(body: Node2D) -> void:
+	ui_animation_player.play("show", 1, -1, true)
+	if not is_open and multiplayer.is_server() and body.unique_id == 1:
 		Global.active_chest = null
-		ui_animation_player.play("show", 1, -1, true)
 		Global.help_ui.visible = false
