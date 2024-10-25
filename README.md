@@ -22,7 +22,7 @@ This is a repository containing 2 different games to teach game development with
 8. Changing scenes
 9. There is more... I just don't remember them all
 
-### [First Game Demo](./2d_platformer)
+### [First Game Demo](./2d_platformer) (Based on [Brackeys](https://www.youtube.com/watch?v=LOhfqjmasi0) Tutorial)
 
 ![Brackeys game](./2d_platformer/demo.png)
 
